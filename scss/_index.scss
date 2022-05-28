@@ -1,0 +1,85 @@
+@use "./abstract/colors" as c;
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: c.$cyan;
+    .wrapper {
+        width: 770px;
+        padding: 35px;
+        background: c.$white;
+        border-radius: 10px;
+        .content-box {
+            padding: 13px 20px 0;
+            border: 1px solid c.$gray;
+            border-radius: 10px;
+            .typing-text {
+                max-height: 255px;
+                overflow-y: auto;
+                p {
+                    font-size: 21px;
+                    text-align: justify;
+                    letter-spacing: 1px;
+                    word-break: break-all;
+                }
+            }
+            .typing-text::-webkit-scrollbar {
+                width: 0;
+            }
+            .content {
+                margin-top: 17px;
+                padding: 12px 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-top: 1px solid c.$gray;
+                button {
+                    width: 105px;
+                    padding: 8px 0;
+                    background: c.$cyan;
+                    color: c.$white;
+                    font-size: 16px;
+                    border-radius: 5px;
+                    border: none;
+                    outline: none;
+                    cursor: pointer;
+                    transition: transform 0.3s ease;
+                }
+                button:active {
+                    transform: scale(0.97);
+                }
+                .result-details {
+                    display: flex;
+                    width: calc(100% - 140px);
+                    justify-content: space-between;
+                    li {
+                        height: 22px;
+                        display: flex;
+                        align-items: center;
+                        list-style: none;
+                        p {
+                            font-size: 19px;
+                        }
+                        span {
+                            display: block;
+                            margin-left: 10px;
+                            font-size: 20px;
+                        }
+                        b {
+                            font-weight: 500;
+                        }
+                    }
+                    li:not(:first-child) {
+                        padding-left: 22px;
+                        border-left: 1px solid c.$gray;
+                        span {
+                            font-weight: 500;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
