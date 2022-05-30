@@ -28,6 +28,8 @@ function initTyping() {
         characters[charIndex].classList.add("incorrect");
     };
     charIndex ++; // increment charIndex either user typed correct or incorrect character
+    characters.forEach(span => span.classList.remove("active"));
+    characters[charIndex].classList.add("active");
 };
 
 randomParagraph();
