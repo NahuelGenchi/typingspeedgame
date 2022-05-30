@@ -23,6 +23,14 @@ body {
                     text-align: justify;
                     letter-spacing: 1px;
                     word-break: break-all;
+                    span.correct {
+                        color: c.$correct;
+                    }
+                    span.incorrect {
+                        color: c.$incorrect;
+                        background-color: c.$incorrectBackground;
+                        border-radius: 4px;
+                    }
                 }
             }
             .typing-text::-webkit-scrollbar {

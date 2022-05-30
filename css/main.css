@@ -33,6 +33,14 @@ body .wrapper .content-box .typing-text p {
   letter-spacing: 1px;
   word-break: break-all;
 }
+body .wrapper .content-box .typing-text p span.correct {
+  color: #56964F;
+}
+body .wrapper .content-box .typing-text p span.incorrect {
+  color: #CB3439;
+  background-color: #FFC0CB;
+  border-radius: 4px;
+}
 body .wrapper .content-box .typing-text::-webkit-scrollbar {
   width: 0;
 }
