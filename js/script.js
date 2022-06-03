@@ -1,8 +1,12 @@
 const typingText = document.querySelector(".typing-text p"),
 inpField = document.querySelector(".wrapper .input-field"),
+timeTag = document.querySelector(".time b"),
 mistakeTag = document.querySelector(".mistake span");
 
-let charIndex = mistakes = 0;
+let timer,
+maxTime = 60,
+timeLeft = maxTime,
+charIndex = mistakes = isTyping = 0;
 
 function randomParagraph() {
     // getting random number and it'll always less than the paragraphs length
@@ -21,6 +25,10 @@ function randomParagraph() {
 function initTyping() {
     const characters = typingText.querySelectorAll("span");
     let typedChar = inpField.value.split("")[charIndex];
+    if (!isTyping) { // once timer is start, it won't restart again on every key clicked
+        timer = setInterval(initTimer, 1000);
+        isTyping = true;
+    }
     // if user hasn't entered any character or pressed backspace
     if (typedChar == null) {
         charIndex--;
@@ -43,6 +51,16 @@ function initTyping() {
     characters.forEach(span => span.classList.remove("active"));
     characters[charIndex].classList.add("active");
     mistakeTag.innerText = mistakes;
+};
+
+function initTimer() {
+    // if timeLeft is greater than 0 then decrement the timeLeft else clear the timer
+    if (timeLeft > 0) {
+        timeLeft--;
+        timeTag.innerText = timeLeft;
+    } else {
+        clearInterval(timer);
+    };
 };
 
 randomParagraph();
