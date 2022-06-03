@@ -1,7 +1,9 @@
 const typingText = document.querySelector(".typing-text p"),
 inpField = document.querySelector(".wrapper .input-field"),
 timeTag = document.querySelector(".time b"),
-mistakeTag = document.querySelector(".mistake span");
+mistakeTag = document.querySelector(".mistake span"),
+wpmTag = document.querySelector(".wpm span"),
+cpmTag = document.querySelector(".cpm span");
 
 let timer,
 maxTime = 60,
@@ -25,32 +27,43 @@ function randomParagraph() {
 function initTyping() {
     const characters = typingText.querySelectorAll("span");
     let typedChar = inpField.value.split("")[charIndex];
-    if (!isTyping) { // once timer is start, it won't restart again on every key clicked
-        timer = setInterval(initTimer, 1000);
-        isTyping = true;
-    }
-    // if user hasn't entered any character or pressed backspace
-    if (typedChar == null) {
-        charIndex--;
-        // decrement mistakes only if the charIndex span contains incorrect class
-        if (characters[charIndex].classList.contains("incorrect")) {
-            mistakes--;
-        };
-        characters[charIndex].classList.remove("correct","incorrect");
-    } else {
-        if (characters[charIndex].innerText === typedChar) {
-            /* if user typed character and shown character matched then add the
-               correct class, else increment the mistakes and add the incorrect class */
-            characters[charIndex].classList.add("correct");
+    if (charIndex < characters.length - 1 && timeLeft > 0) {
+        if (!isTyping) { // once timer is start, it won't restart again on every key clicked
+            timer = setInterval(initTimer, 1000);
+            isTyping = true;
+        }
+        // if user hasn't entered any character or pressed backspace
+        if (typedChar == null) {
+            charIndex--;
+            // decrement mistakes only if the charIndex span contains incorrect class
+            if (characters[charIndex].classList.contains("incorrect")) {
+                mistakes--;
+            };
+            characters[charIndex].classList.remove("correct","incorrect");
         } else {
-            mistakes++;
-            characters[charIndex].classList.add("incorrect");
+            if (characters[charIndex].innerText === typedChar) {
+                /* if user typed character and shown character matched then add the
+                   correct class, else increment the mistakes and add the incorrect class */
+                characters[charIndex].classList.add("correct");
+            } else {
+                mistakes++;
+                characters[charIndex].classList.add("incorrect");
+            };
+            charIndex++; // increment charIndex either user typed correct or incorrect character
         };
-        charIndex++; // increment charIndex either user typed correct or incorrect character
-    };
-    characters.forEach(span => span.classList.remove("active"));
-    characters[charIndex].classList.add("active");
-    mistakeTag.innerText = mistakes;
+        characters.forEach(span => span.classList.remove("active"));
+        characters[charIndex].classList.add("active");
+    
+        let wpm = Math.round((((charIndex - mistakes) / 5) / (maxTime - timeLeft)) * 60);
+        // if wpm value is 0, empty, or infinity then setting its value to 0
+        wpm = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm;
+        mistakeTag.innerText = mistakes;
+        wpmTag.innerText = wpm;
+        cpmTag.innerText = charIndex - mistakes; // cpm won't count mistakes
+    } else {
+        inpField.value = "";
+        clearInterval(timer);
+    }
 };
 
 function initTimer() {
