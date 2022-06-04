@@ -3,7 +3,8 @@ inpField = document.querySelector(".wrapper .input-field"),
 timeTag = document.querySelector(".time b"),
 mistakeTag = document.querySelector(".mistake span"),
 wpmTag = document.querySelector(".wpm span"),
-cpmTag = document.querySelector(".cpm span");
+cpmTag = document.querySelector(".cpm span"),
+tryAgainBtn = document.querySelector(".content button");
 
 let timer,
 maxTime = 60,
@@ -13,6 +14,7 @@ charIndex = mistakes = isTyping = 0;
 function randomParagraph() {
     // getting random number and it'll always less than the paragraphs length
     let randIndex = Math.floor(Math.random() * paragraphs.length);
+    typingText.innerHTML = "";
     /* getting random item from the paragraphs array, splitting all characters
     of it, adding each character inside span and then adding this span inside p tag */
     paragraphs[randIndex].split("").forEach(span => {
@@ -76,5 +78,20 @@ function initTimer() {
     };
 };
 
+function resetGame() {
+    /* calling loadParagraph function and
+    resetting each variables and elements to default */
+    randomParagraph();
+    inpField.value = "";
+    clearInterval(timer);
+    timeLeft = maxTime,
+    charIndex = mistakes = isTyping = 0;
+    timeTag.innerText = timeLeft;
+    mistakeTag.innerText = mistakes;
+    wpmTag.innerText = 0;
+    cpmTag.innerText = 0;
+};
+
 randomParagraph();
 inpField.addEventListener("input", initTyping);
+tryAgainBtn.addEventListener("click", resetGame);
